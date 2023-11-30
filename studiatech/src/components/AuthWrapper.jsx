@@ -1,20 +1,44 @@
+import { useCookies } from "react-cookie";
+import { useStateProvider } from "../context/StateContext";
+import { reducerCases } from "@/context/constants";
+import { LOGIN_ROUTE, SIGNUP_ROUTE } from "../utils/constants";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { MdFacebook } from "react-icons/md";
-import { useRouter } from "next/router";
-import { useStateProvider } from "../context/StateContext";
-import { reducerCases } from "../context/constants";
 
 function AuthWrapper({ type }) {
-  const router = useRouter();
-
+  const [cookies, setCookies] = useCookies();
   const [{ showLoginModal, showSignupModal }, dispatch] = useStateProvider();
   const [values, setValues] = useState({ email: "", password: "" });
 
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const handleClick = async () => {
+    try {
+      const { email, password } = values;
+      if (email && password) {
+        const {
+          data: { user, jwt },
+        } = await axios.post(
+          type === "login" ? LOGIN_ROUTE : SIGNUP_ROUTE,
+          { email, password },
+          { withCredentials: true }
+        );
+        setCookies("jwt", { jwt: jwt });
+        dispatch({ type: reducerCases.CLOSE_AUTH_MODAL });
+
+        if (user) {
+          dispatch({ type: reducerCases.SET_USER, userInfo: user });
+          window.location.reload();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -66,6 +90,7 @@ function AuthWrapper({ type }) {
               />
               <button
                 className="bg-[#1DBF73] text-white px-12 text-lg font-semibold rounded-r-md p-3 w-80"
+                onClick={handleClick}
                 type="button"
               >
                 Continuar
