@@ -1,21 +1,14 @@
+import React, { useState, useEffect } from 'react';
 import { useStateProvider } from "@/context/StateContext";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
-/*
-import { useStateProvider } from "../context/StateContext";
-import { reducerCases } from "../context/constants";
 import {
   HOST,
   IMAGES_URL,
   SET_USER_IMAGE,
   SET_USER_INFO,
 } from "../utils/constants";
-import axios from "axios";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-*/
+
 
 function profile() {
   const router = useRouter();
@@ -191,16 +184,19 @@ function profile() {
               />
             </div>
             <div>
-            <label className={labelClassName} htmlFor="fullName">
+              <label 
+                className={`${labelClassName} style-text-black`} 
+                htmlFor="fullName"
+              >
                 Porfavor ingresa tu nombre completo.
               </label>
               <input 
-              type="text" 
-              className={inputClassName} 
-              name="fullName" 
-              placeholder= "Full Name" 
-              value={data.fullName} 
-              onChange={handleChange} 
+                type="text" 
+                className={inputClassName} 
+                name="fullName" 
+                placeholder="Full Name" 
+                value={data.fullName} 
+                onChange={handleChange} 
               />
             </div>
           </div>
