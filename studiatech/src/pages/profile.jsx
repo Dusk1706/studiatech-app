@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useStateProvider } from "@/context/StateContext";
+import { useStateProvider } from "../context/StateContext";
+import { reducerCases } from "../context/constants";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import {
@@ -30,7 +31,7 @@ function profile() {
       if(userInfo?.description) handleData.description = userInfo?.description;
       if(userInfo?.fullName) handleData.fullName = userInfo?.fullName;
     }
-    
+
     if(userInfo?.imageName){
       const fileName = image;
       fetch(userInfo.imageName).then(async(response) => {
@@ -59,7 +60,7 @@ function profile() {
       setImage(file[0]);
     }
   };
-  
+
   const setProfile = async () => {
     try {
       const response = await axios.post(
@@ -101,32 +102,36 @@ function profile() {
     }
   };
 
-  const inputClassName = "block p-4 w-full text-sm text-gray-900 border border-gray-300 rounded.lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500";
-  const labelClassName = "mb-2 text-lg font-medium text-gray-900 dark:text-white";
+
+  const inputClassName =
+    "block p-4 w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  focus:ring-blue-500 focus:border-blue-500";
+  const labelClassName =
+    "mt-3 mb-1 text-lg font-medium text-gray-900  dark:text-black";
 
   return (
     <>
       {isLoaded && (
-      <div className="flex flex-col items-center justify-start min-h-[80vh] gap-3">
-        {errorMessage && (
-          <div>
-            <span className="text-red-600 font-bold">{errorMessage}</span>
-          </div>
-      )}
-      <h2 className="text-3xl">Bienvenido a StudiaTech</h2>
-      <h4 className="text-xl">
-        Porfavor ingresa tu perfil para iniciar
+        <div className="flex flex-col items-center justify-start min-h-[80vh] gap-3">
+          {errorMessage && (
+            <div>
+              <span className="text-red-600 font-bold">{errorMessage}</span>
+            </div>
+          )}
+        <h2 className="text-3xl">Bienvenido a StudiaTech</h2>
+        <h4 className="text-xl">
+          Porfavor ingresa tu perfil para iniciar
         </h4>
         <div className="flex flex-col items-center w-full gap-5">
-          <div className="flex flex-col items-center cursor-pointer"
-          onMouseEnter={() => setImageHover (true)}
-          onMouseLeave={() => setImageHover(false)}
-          >
-            <label className={labelClassName}>
-              Seleccionar tu foto de perfil.
-            </label>
-            <div className="bg-purple-500 h-36 w-36 flex items-center justify-center rounded-full relative">
-            {image ? (
+            <div
+              className="flex flex-col items-center cursor-pointer"
+              onMouseEnter={() => setImageHover(true)}
+              onMouseLeave={() => setImageHover(false)}
+            >
+              <label className={labelClassName} htmlFor="">
+                Seleccionar foto de perfil.
+              </label>
+              <div className="bg-purple-500 h-36 w-36 flex items-center justify-center rounded-full relative">
+                {image ? (
                   <Image
                     src={URL.createObjectURL(image)}
                     alt="Profile"
@@ -171,32 +176,32 @@ function profile() {
           </div>
           <div className="grid grid-cols-2 gap-4 w-[500px]">
             <div>
-              <label className={labelClassName} htmlFor="username">
-                Porfavor ingresa tu nombre de usuario.
+              <label className={labelClassName}  htmlFor="username">
+                Nombre de usuario
               </label>
-              <input 
-              type="text" 
-              className={inputClassName} 
-              name="userName" 
-              placeholder= "Username" 
-              value={data.userName} 
-              onChange={handleChange} 
+              <input
+              type="text"
+              className={inputClassName}
+              name="userName"
+              placeholder= "Ingresa tu nombre de usuario"
+              value={data.userName}
+              onChange={handleChange}
               />
             </div>
             <div>
-              <label 
-                className={`${labelClassName} style-text-black`} 
+              <label
+                className={`${labelClassName} style-text-black`}
                 htmlFor="fullName"
               >
-                Porfavor ingresa tu nombre completo.
+                Nombre completo
               </label>
-              <input 
-                type="text" 
-                className={inputClassName} 
-                name="fullName" 
-                placeholder="Full Name" 
-                value={data.fullName} 
-                onChange={handleChange} 
+              <input
+                type="text"
+                className={inputClassName}
+                name="fullName"
+                placeholder="Ingresa tu nombre completo"
+                value={data.fullName}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -210,7 +215,7 @@ function profile() {
                 value={data.description}
                 onChange={handleChange}
                 className={inputClassName}
-                placeholder="description"
+                placeholder="Habla sobre ti"
               ></textarea>
             </div>
             <button
@@ -218,7 +223,7 @@ function profile() {
               type="button"
               onClick={setProfile}
             >
-              Set Profile
+              Guardar Perfil
             </button>
         </div>
         </div>
