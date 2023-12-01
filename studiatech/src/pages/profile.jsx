@@ -20,7 +20,7 @@ import React, { useEffect, useState } from "react";
 function profile() {
   const router = useRouter();
   const [{ userInfo }, dispatch] = useStateProvider();
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [imageHover, setImageHover] = useState(false);
   const [image, setImage] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
@@ -29,6 +29,30 @@ function profile() {
     fullName: "",
     description: "",
   });
+
+  useEffect(() => {
+    const handleData = {...data};
+    if(userInfo){
+      if(userInfo?.username) handleData.userName = userInfo?.username;
+      if(userInfo?.description) handleData.description = userInfo?.description;
+      if(userInfo?.fullName) handleData.fullName = userInfo?.fullName;
+    }
+    
+    if(userInfo?.imageName){
+      const fileName = image;
+      fetch(userInfo.imageName).then(async(response) => {
+        const contentType = response.headers.get("content-type");
+        const blob = await response.blob();
+
+        const files = new File([blob], fileName, { contentType});
+        setImage(files);
+      })
+    }
+
+
+    setData(handleData);
+    setIsLoaded(true);
+  }, [userInfo]);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
