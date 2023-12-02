@@ -21,4 +21,20 @@ model User {
   phone String?
   isProfileInfoSet Boolean? @default(false)
   createdAt DateTime @default(now())
+  gigs Gigs[]
+}
+
+model Gigs {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  category String
+  minHours Int
+  features String[]
+  price Int
+  shortDesc String
+  createdAt DateTime @default(now())
+  images String[]
+  createdBy User @relation(fields: [userId], references: [id])
+  userId Int
 }

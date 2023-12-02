@@ -13,7 +13,7 @@ import Image from "next/image";
 function Navbar() {
   const router = useRouter();
   const [cookies] = useCookies();
-  const [isFixed, setIsFixed] = useState(false);
+  const [isFixed, setIsFixed] = useState(true);
   const [isLoaded, setIsLoaded] = useState(true);
   const [searchData, setSearchData] = useState("");
   const [{ showLoginModal, showSignupModal, userInfo, isSeller }, dispatch] =

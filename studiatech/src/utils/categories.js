@@ -6,7 +6,7 @@ export const categories = [
     { name: "Musica y Audio", logo: "/service-5.svg" },
     { name: "Programacion", logo: "/service-6.svg" },
     { name: "Negocios", logo: "/service-7.svg" },
-    { name: "Artes", logo: "/service-8.svg" },
+    { name: "Entretenimiento", logo: "/service-8.svg" },
     { name: "Ciencia de Datos", logo: "/service-9.svg" },
     { name: "Fotografia", logo: "/service-10.svg" },
   ];
