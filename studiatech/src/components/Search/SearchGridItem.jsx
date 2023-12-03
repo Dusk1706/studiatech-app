@@ -60,7 +60,7 @@ function SearchGridItem({ gig }) {
         <span>
           <strong className="font-medium">{calculateRatings()}</strong>
         </span>
-        {/* <span className="text-[#74767e]">({gig.reviews.length})</span> */}
+        <span className="text-[#74767e]">({gig.reviews.length})</span>
       </div>
       <div>
         <strong className="font-medium">${gig.price} / Hora</strong>

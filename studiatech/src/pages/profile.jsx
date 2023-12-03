@@ -9,8 +9,8 @@ import {
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from "react";
+import { Cookies } from "react-cookie";
 
 function profile() {
   const router = useRouter();
@@ -26,24 +26,23 @@ function profile() {
   });
 
   useEffect(() => {
-    const handleData = {...data};
-    if(userInfo){
-      if(userInfo?.username) handleData.userName = userInfo?.username;
-      if(userInfo?.description) handleData.description = userInfo?.description;
-      if(userInfo?.fullName) handleData.fullName = userInfo?.fullName;
+    const handleData = { ...data };
+    if (userInfo) {
+      if (userInfo?.username) handleData.userName = userInfo?.username;
+      if (userInfo?.description) handleData.description = userInfo?.description;
+      if (userInfo?.fullName) handleData.fullName = userInfo?.fullName;
     }
 
-    if(userInfo?.imageName){
+    if (userInfo?.imageName) {
       const fileName = image;
-      fetch(userInfo.imageName).then(async(response) => {
+      fetch(userInfo.imageName).then(async (response) => {
         const contentType = response.headers.get("content-type");
         const blob = await response.blob();
 
-        const files = new File([blob], fileName, { contentType});
+        const files = new File([blob], fileName, { contentType });
         setImage(files);
-      })
+      });
     }
-
 
     setData(handleData);
     setIsLoaded(true);
@@ -67,7 +66,12 @@ function profile() {
       const response = await axios.post(
         SET_USER_INFO,
         { ...data },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${Cookies.jwt}`,
+          },
+        }
       );
       if (response.data.userNameError) {
         setErrorMessage("Enter a Unique Username");
@@ -81,6 +85,7 @@ function profile() {
           } = await axios.post(SET_USER_IMAGE, formData, {
             withCredentials: true,
             headers: {
+              Authorization: `Bearer ${cookies.jwt}`,
               "Content-Type": "multipart/form-data",
             },
           });
@@ -103,7 +108,6 @@ function profile() {
     }
   };
 
-
   const inputClassName =
     "block p-4 w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  focus:ring-blue-500 focus:border-blue-500";
   const labelClassName =
@@ -118,11 +122,9 @@ function profile() {
               <span className="text-red-600 font-bold">{errorMessage}</span>
             </div>
           )}
-        <h2 className="text-3xl">Bienvenido a StudiaTech</h2>
-        <h4 className="text-xl">
-          Porfavor ingresa tu perfil para iniciar
-        </h4>
-        <div className="flex flex-col items-center w-full gap-5">
+          <h2 className="text-3xl">Bienvenido a StudiaTech</h2>
+          <h4 className="text-xl">Porfavor ingresa tu perfil para iniciar</h4>
+          <div className="flex flex-col items-center w-full gap-5">
             <div
               className="flex flex-col items-center cursor-pointer"
               onMouseEnter={() => setImageHover(true)}
@@ -140,9 +142,9 @@ function profile() {
                     className="rounded-full"
                   />
                 ) : (
-                    <span className="text-6xl text-white">
-                      {userInfo?.email[0].toUpperCase()}
-                    </span>
+                  <span className="text-6xl text-white">
+                    {userInfo?.email[0].toUpperCase()}
+                  </span>
                 )}
                 <div
                   className={`absolute bg-slate-400 h-full w-full rounded-full flex items-center justify-center   transition-all duration-100  ${
@@ -171,42 +173,42 @@ function profile() {
                       multiple={true}
                       name="profileImage"
                     />
-                    </span>
+                  </span>
                 </div>
+              </div>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4 w-[500px]">
-            <div>
-              <label className={labelClassName}  htmlFor="username">
-                Nombre de usuario
-              </label>
-              <input
-              type="text"
-              className={inputClassName}
-              name="userName"
-              placeholder= "Ingresa tu nombre de usuario"
-              value={data.userName}
-              onChange={handleChange}
-              />
+            <div className="grid grid-cols-2 gap-4 w-[500px]">
+              <div>
+                <label className={labelClassName} htmlFor="username">
+                  Nombre de usuario
+                </label>
+                <input
+                  type="text"
+                  className={inputClassName}
+                  name="userName"
+                  placeholder="Ingresa tu nombre de usuario"
+                  value={data.userName}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label
+                  className={`${labelClassName} style-text-black`}
+                  htmlFor="fullName"
+                >
+                  Nombre completo
+                </label>
+                <input
+                  type="text"
+                  className={inputClassName}
+                  name="fullName"
+                  placeholder="Ingresa tu nombre completo"
+                  value={data.fullName}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
-            <div>
-              <label
-                className={`${labelClassName} style-text-black`}
-                htmlFor="fullName"
-              >
-                Nombre completo
-              </label>
-              <input
-                type="text"
-                className={inputClassName}
-                name="fullName"
-                placeholder="Ingresa tu nombre completo"
-                value={data.fullName}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col w-[500px]">
+            <div className="flex flex-col w-[500px]">
               <label className={labelClassName} htmlFor="description">
                 Descripcion
               </label>
@@ -226,10 +228,10 @@ function profile() {
             >
               Guardar Perfil
             </button>
-        </div>
+          </div>
         </div>
       )}
-      </>
+    </>
   );
 }
 

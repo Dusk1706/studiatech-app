@@ -65,8 +65,8 @@ function CreateGigs() {
         shortDesc,
       };
       const response = await axios.post(ADD_GIG_ROUTE, formData, {
-        withCredentials: true,
         headers: {
+          Authorization: `Bearer ${cookies.jwt}`,
           "Content-Type": "multipart/form-data",
         },
         params: gigData,
