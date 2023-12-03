@@ -6,12 +6,21 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { MdFacebook } from "react-icons/md";
+import { useRouter } from "next/router";
 
 function AuthWrapper({ type }) {
   const [cookies, setCookies] = useCookies();
   const [{ showLoginModal, showSignupModal }, dispatch] = useStateProvider();
+  const router = useRouter();
+
   const [values, setValues] = useState({ email: "", password: "" });
 
+  useEffect(() => {
+    if (cookies.jwt) {
+      dispatch({ type: reducerCases.CLOSE_AUTH_MODAL });
+      router.push("/dashboard");
+    }
+  }, [cookies, dispatch, router]);
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });

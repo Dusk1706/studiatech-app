@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
 import { useStateProvider } from "../context/StateContext";
 import { reducerCases } from "../context/constants";
-import Image from "next/image";
-import { useRouter } from "next/router";
 import {
   HOST,
   IMAGES_URL,
   SET_USER_IMAGE,
   SET_USER_INFO,
 } from "../utils/constants";
+import axios from "axios";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from 'react';
 
 
 function profile() {

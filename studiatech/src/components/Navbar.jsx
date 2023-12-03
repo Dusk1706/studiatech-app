@@ -13,8 +13,8 @@ import Image from "next/image";
 function Navbar() {
   const router = useRouter();
   const [cookies] = useCookies();
-  const [isFixed, setIsFixed] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isFixed, setIsFixed] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [searchData, setSearchData] = useState("");
   const [{ showLoginModal, showSignupModal, userInfo, isSeller }, dispatch] =
     useStateProvider();
@@ -46,12 +46,12 @@ function Navbar() {
   };
 
   const links = [
-    { linkName: "StudiaTech", handler: "#", type: "link" },
+    { linkName: "StudiaTech Empresas", handler: "#", type: "link" },
     { linkName: "Explorar", handler: "#", type: "link" },
     { linkName: "English", handler: "#", type: "link" },
-    { linkName: "Soy tutor", handler: "#", type: "link" },
     { linkName: "Iniciar Sesion", handler: handleLogin, type: "button" },
-    { linkName: "Registrarse", handler: handleSignup, type: "button2" },
+    { linkName: "Español", handler: "#", type: "link" },
+    { linkName: "Se un tutor", handler: "#", type: "link" },
   ];
 
   useEffect(() => {
