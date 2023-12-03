@@ -35,7 +35,7 @@ export const addGig = async (req, res, next) => {
             features,
             price: parseInt(price),
             shortDesc,
-            minHours: parseInt(revisions),
+            minHours: parseInt(minHours),
             createdBy: { connect: { id: req.userId } },
             images: fileNames,
           },
@@ -59,6 +59,7 @@ export const getUserAuthGigs = async (req, res, next) => {
         where: { id: req.userId },
         include: { gigs: true },
       });
+      console.log(user);
       return res.status(200).json({ gigs: user?.gigs ?? [] });
     }
     return res.status(400).send("UserId should be required.");

@@ -48,10 +48,10 @@ function Navbar() {
   const links = [
     { linkName: "StudiaTech Empresas", handler: "#", type: "link" },
     { linkName: "Explorar", handler: "#", type: "link" },
-    { linkName: "English", handler: "#", type: "link" },
-    { linkName: "Iniciar Sesion", handler: handleLogin, type: "button" },
     { linkName: "Español", handler: "#", type: "link" },
     { linkName: "Se un tutor", handler: "#", type: "link" },
+    { linkName: "Iniciar Sesion", handler: handleLogin, type: "button" },
+    { linkName: "Registrarse", handler: handleSignup, type: "button2" },
   ];
 
   useEffect(() => {
