@@ -48,7 +48,11 @@ function Search() {
                 {gigs.length} Servicios disponibles
               </span>
             </div>
-           
+            <div className="grid grid-cols-4">
+              {gigs.map((gig) => (
+                <SearchGridItem gig={gig} key={gig.id} />
+              ))}
+            </div>
           </div>
         </div>
       )}

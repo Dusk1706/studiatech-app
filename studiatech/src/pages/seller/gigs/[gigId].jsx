@@ -52,7 +52,7 @@ function EditGig() {
         setfeatures(gig.features);
 
         gig.images.forEach((image) => {
-          const url = HOST + "/uploads"+ image;
+          const url = HOST + "/uploads/"+ image;
           const fileName = image;
           fetch(url).then(async (response) => {
             const contentType = response.headers.get("content-type");
