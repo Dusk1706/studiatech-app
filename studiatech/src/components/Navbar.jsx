@@ -111,7 +111,6 @@ function Navbar() {
             userInfo: projectedUserInfo,
           });
           setIsLoaded(true);
-          console.log({ user });
           if (user.isProfileSet === false) {
             router.push("/profile");
           }

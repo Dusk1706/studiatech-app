@@ -1,6 +1,6 @@
 import ImageUpload from "../../../components/ImageUpload";
 import { categories } from "../../../utils/categories";
-import { EDIT_GIG_DATA, GET_GIG_DATA } from "../../../utils/constants";
+import { EDIT_GIG_DATA, GET_GIG_DATA, HOST } from "../../../utils/constants";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ function EditGig() {
   const inputClassName =
     "block p-4 w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  focus:ring-blue-500 focus:border-blue-500";
   const labelClassName =
-    "mb-2 text-lg font-medium text-gray-900  dark:text-white";
+    "mb-2 text-lg font-medium text-gray-900  dark:text-black";
   const [files, setFile] = useState([]);
   const [features, setfeatures] = useState([]);
   const [data, setData] = useState({
@@ -48,12 +48,11 @@ function EditGig() {
         const {
           data: { gig },
         } = await axios.get(`${GET_GIG_DATA}/${gigId}`);
-
-        setData({ ...gig, time: gig.revisions });
+        setData({ ...gig });
         setfeatures(gig.features);
 
         gig.images.forEach((image) => {
-          const url = "http://localhost:8747/uploads/" + image;
+          const url = HOST + "/uploads"+ image;
           const fileName = image;
           fetch(url).then(async (response) => {
             const contentType = response.headers.get("content-type");
@@ -70,8 +69,7 @@ function EditGig() {
   }, [gigId]);
 
   const editGig = async () => {
-    const { category, description, price, minHours, title, shortDesc } =
-      data;
+    const { category, description, price, minHours, title, shortDesc } = data;
 
     if (
       category &&
@@ -113,15 +111,15 @@ function EditGig() {
   };
   return (
     <div className="min-h-[80vh] my-10 mt-0 px-32">
-      <h1 className="text-6xl text-gray-900 mb-5">Edit Gig</h1>
-      <h3 className="text-3xl text-gray-900 mb-5">
-        Enter the details to edit the gig
+      <h1 className="text-6xl text-gray-900 mt-6">Edita un servicio</h1>
+      <h3 className="text-3xl text-gray-900 mt-6">
+        Ingresa los detalles para editar el servicio
       </h3>
       <form action="" className="flex flex-col gap-5 mt-10">
         <div className="grid grid-cols-2 gap-11">
           <div>
             <label htmlFor="title" className={labelClassName}>
-              Gig Title
+              Titulo del servicio
             </label>
             <input
               name="title"
@@ -136,14 +134,14 @@ function EditGig() {
           </div>
           <div>
             <label htmlFor="categories" className={labelClassName}>
-              Select a Category
+              Selecciona una categoria
             </label>
             <select
               id="categories"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4"
               name="category"
               onChange={handleChange}
-              value={data.category}
+              defaultValue="Choose a Category"
             >
               {categories.map(({ name }) => (
                 <option key={name} value={name}>
@@ -155,12 +153,12 @@ function EditGig() {
         </div>
         <div>
           <label htmlFor="description" className={labelClassName}>
-            Gig Description
+            Descripcion del servicio
           </label>
           <textarea
             id="description"
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Write a short description"
+            placeholder="Escribe una descripcion del servicio"
             name="description"
             value={data.description}
             onChange={handleChange}
@@ -168,28 +166,30 @@ function EditGig() {
         </div>
         <div className="grid grid-cols-2 gap-11">
           <div>
-            <label htmlFor="delivery">Delivery Time</label>
-            <input
-              type="number"
-              className={inputClassName}
-              id="delivery"
-              name="time"
-              value={data.time}
-              onChange={handleChange}
-              placeholder="Minimum Delivery Time"
-            />
-          </div>
-          <div>
-            <label htmlFor="revision" className={labelClassName}>
-              Minimo numero de horas
+            <label htmlFor="minHours" className={labelClassName}>
+              Minimo de horas
             </label>
             <input
               type="number"
               id="minHours"
               className={inputClassName}
-              placeholder="Minimo numero de horas"
+              placeholder="Numero de horas minimo"
               name="minHours"
               value={data.minHours}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="price" className={labelClassName}>
+              Precio del servicio ( $ )
+            </label>
+            <input
+              type="number"
+              className={`${inputClassName} w-1/5`}
+              id="price"
+              placeholder="Ingresa un precio"
+              name="price"
+              value={data.price}
               onChange={handleChange}
             />
           </div>
@@ -199,12 +199,13 @@ function EditGig() {
             <label htmlFor="features" className={labelClassName}>
               Subcategorias
             </label>
+
             <div className="flex gap-3 items-center mb-5">
               <input
                 type="text"
                 id="features"
                 className={inputClassName}
-                placeholder="Enter a Feature Name"
+                placeholder="Ingresa una subcategoria"
                 name="feature"
                 value={data.feature}
                 onChange={handleChange}
@@ -214,9 +215,10 @@ function EditGig() {
                 className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800  font-medium  text-lg px-10 py-3 rounded-md "
                 onClick={addFeature}
               >
-                Add
+                Añadir
               </button>
             </div>
+
             <ul className="flex gap-2 flex-wrap">
               {features.map((feature, index) => {
                 return (
@@ -236,9 +238,10 @@ function EditGig() {
               })}
             </ul>
           </div>
+
           <div>
             <label htmlFor="image" className={labelClassName}>
-              Gig Images
+              Imagenes del servicio
             </label>
             <div>
               <ImageUpload files={files} setFile={setFile} />
@@ -248,45 +251,31 @@ function EditGig() {
         <div className="grid grid-cols-2 gap-11">
           <div>
             <label htmlFor="shortDesc" className={labelClassName}>
-              Short Description
+              Descripcion corta
             </label>
             <input
               type="text"
               className={`${inputClassName} w-1/5`}
               id="shortDesc"
-              placeholder="Enter a short description."
+              placeholder="Ingresa una descripcion corta"
               name="shortDesc"
               value={data.shortDesc}
               onChange={handleChange}
             />
           </div>
-          <div>
-            <label htmlFor="price" className={labelClassName}>
-              Gig Price ( $ )
-            </label>
-            <input
-              type="number"
-              className={`${inputClassName} w-1/5`}
-              id="price"
-              placeholder="Enter a price"
-              name="price"
-              value={data.price}
-              onChange={handleChange}
-            />
-          </div>
         </div>
+
         <div>
           <button
             className="border   text-lg font-semibold px-5 py-3   border-[#1DBF73] bg-[#1DBF73] text-white rounded-md"
             type="button"
             onClick={editGig}
           >
-            Edit
+            Crear
           </button>
         </div>
       </form>
     </div>
   );
 }
-
 export default EditGig;

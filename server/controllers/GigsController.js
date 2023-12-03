@@ -53,16 +53,13 @@ export const addGig = async (req, res, next) => {
 
 export const getUserAuthGigs = async (req, res, next) => {
   try {
-    if (req.userId) {
-      const prisma = new PrismaClient();
-      const user = await prisma.user.findUnique({
-        where: { id: req.userId },
-        include: { gigs: true },
-      });
-      console.log(user);
-      return res.status(200).json({ gigs: user?.gigs ?? [] });
-    }
-    return res.status(400).send("UserId should be required.");
+    const prisma = new PrismaClient();
+    const user = await prisma.user.findUnique({
+      where: { id: req.userId },
+      include: { gigs: true },
+    });
+
+    return res.status(200).json({ gigs: user?.gigs});
   } catch (err) {
     console.log(err);
     return res.status(500).send("Internal Server Error");
@@ -75,45 +72,13 @@ export const getGigData = async (req, res, next) => {
       const prisma = new PrismaClient();
       const gig = await prisma.gigs.findUnique({
         where: { id: parseInt(req.params.gigId) },
-        include: {
-          reviews: {
-            include: {
-              reviewer: true,
-            },
-          },
-          createdBy: true,
-        },
+        include: { createdBy: true },
       });
-
-      const userWithGigs = await prisma.user.findUnique({
-        where: { id: gig?.createdBy.id },
-        include: {
-          gigs: {
-            include: { reviews: true },
-          },
-        },
-      });
-
-      const totalReviews = userWithGigs.gigs.reduce(
-        (acc, gig) => acc + gig.reviews.length,
-        0
-      );
-
-      const averageRating = (
-        userWithGigs.gigs.reduce(
-          (acc, gig) =>
-            acc + gig.reviews.reduce((sum, review) => sum + review.rating, 0),
-          0
-        ) / totalReviews
-      ).toFixed(1);
-
-      return res
-        .status(200)
-        .json({ gig: { ...gig, totalReviews, averageRating } });
+      return res.status(200).json({ gig });
     }
     return res.status(400).send("GigId should be required.");
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).send("Internal Server Error");
   }
 };
