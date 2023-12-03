@@ -22,8 +22,7 @@ export const addGig = async (req, res, next) => {
           category,
           features,
           price,
-          revisions,
-          time,
+          minHours,
           shortDesc,
         } = req.query;
         const prisma = new PrismaClient();
@@ -32,12 +31,11 @@ export const addGig = async (req, res, next) => {
           data: {
             title,
             description,
-            deliveryTime: parseInt(time),
             category,
             features,
             price: parseInt(price),
             shortDesc,
-            revisions: parseInt(revisions),
+            minHours: parseInt(revisions),
             createdBy: { connect: { id: req.userId } },
             images: fileNames,
           },
@@ -139,8 +137,7 @@ export const editGig = async (req, res, next) => {
           category,
           features,
           price,
-          revisions,
-          time,
+          minHours,
           shortDesc,
         } = req.query;
         const prisma = new PrismaClient();
@@ -152,12 +149,11 @@ export const editGig = async (req, res, next) => {
           data: {
             title,
             description,
-            deliveryTime: parseInt(time),
             category,
             features,
             price: parseInt(price),
             shortDesc,
-            revisions: parseInt(revisions),
+            minHours: parseInt(minHours),
             createdBy: { connect: { id: parseInt(req.userId) } },
             images: fileNames,
           },
