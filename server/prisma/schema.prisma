@@ -25,6 +25,8 @@ model User {
   gigs Gigs[]
   orders Orders[]
   reviews Reviews[]
+  messagesSent Message[] @relation("sentMessages")
+  messagesReceived Message[] @relation("receivedMessages")
 }
 
 model Gigs {
@@ -54,6 +56,7 @@ model Orders {
   gig Gigs @relation(fields:[gigId],references: [id])
   gigId Int
   price Int
+  messages Message[]
 }
 
 model Reviews {
@@ -65,4 +68,17 @@ model Reviews {
   gigId Int
   reviewer User @relation(fields: [reviewerId],references: [id])
   reviewerId Int
+}
+
+model Message {
+  id Int @id @default(autoincrement())
+  text String
+  createdAt DateTime @default(now())
+  isRead Boolean @default(false)
+  sender User @relation("sentMessages", fields: [senderId], references: [id])
+  senderId Int
+  recipient User @relation("receivedMessages", fields: [recipientId], references: [id])
+  recipientId Int
+  order Orders @relation(fields: [orderId], references: [id])
+  orderId Int
 }

@@ -143,7 +143,7 @@ function Navbar() {
   }, [isContextMenuVisible]);
   const ContextMenuData = [
     {
-      name: "Profile",
+      name: "Perfil",
       callback: (e) => {
         e.stopPropagation();
 
@@ -152,7 +152,7 @@ function Navbar() {
       },
     },
     {
-      name: "Logout",
+      name: "Salir",
       callback: (e) => {
         e.stopPropagation();
 
@@ -186,7 +186,7 @@ function Navbar() {
           >
             <input
               type="text"
-              placeholder="What service are you looking for today?"
+              placeholder="Que servicios buscas hoy?"
               className="w-[30rem] py-2.5 px-4 border"
               value={searchData}
               onChange={(e) => setSearchData(e.target.value)}
@@ -238,7 +238,7 @@ function Navbar() {
                   className="cursor-pointer text-[#1DBF73] font-medium"
                   onClick={() => router.push("/seller/gigs/create")}
                 >
-                  Create Gig
+                  Crear Servicio
                 </li>
               )}
               <li
@@ -253,14 +253,14 @@ function Navbar() {
                   className="cursor-pointer font-medium"
                   onClick={handleModeSwitch}
                 >
-                  Ofrecer servicios
+                  Comprar servicios
                 </li>
               ) : (
                 <li
                   className="cursor-pointer font-medium"
                   onClick={handleModeSwitch}
                 >
-                  Comprar servicios
+                  Ofrecer servicios
                 </li>
               )}
               <li

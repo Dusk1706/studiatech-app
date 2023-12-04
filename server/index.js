@@ -6,6 +6,8 @@ import { gigRoutes } from "./routes/GigRoutes.js";
 import { ordersRoutes } from "./routes/OrderRoutes.js";
 
 import cookieParser from "cookie-parser";
+import { messageRoutes } from "./routes/MessageRoutes.js";
+import { dashboardRoutes } from "./routes/DashboardRoutes.js";
 
 dotenv.config();
 
@@ -30,6 +32,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/gigs", gigRoutes);
 app.use("/api/orders", ordersRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

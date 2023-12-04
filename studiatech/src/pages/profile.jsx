@@ -10,10 +10,11 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import { Cookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 
 function profile() {
   const router = useRouter();
+  const [cookies] = useCookies();
   const [{ userInfo }, dispatch] = useStateProvider();
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageHover, setImageHover] = useState(false);
@@ -69,12 +70,12 @@ function profile() {
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${Cookies.jwt}`,
+            Authorization: `Bearer ${ cookies.jwt}`,
           },
         }
       );
       if (response.data.userNameError) {
-        setErrorMessage("Enter a Unique Username");
+        setErrorMessage("Usuario ya existente");
       } else {
         let imageName = "";
         if (image) {
@@ -85,7 +86,7 @@ function profile() {
           } = await axios.post(SET_USER_IMAGE, formData, {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${Cookies.jwt}`,
+              Authorization: `Bearer ${cookies.jwt}`,
               "Content-Type": "multipart/form-data",
             },
           });

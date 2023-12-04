@@ -125,11 +125,11 @@ export const setUserInfo = async (req, res, next) => {
             isProfileInfoSet: true,
           },
         });
-        return res.status(200).send("Profile data updated successfully.");
+        return res.status(200).send("Datos del perfil actualizados.");
       } else {
         return res
           .status(400)
-          .send("Username, Full Name and description should be included.");
+          .send("Usuario, Nombre y descripcion son requeridos.");
       }
     }
   } catch (err) {
