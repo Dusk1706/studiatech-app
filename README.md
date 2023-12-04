@@ -14,10 +14,16 @@ Service Listings: Users can list the tutoring services they offer, including det
 
 Real-Time Messaging: The platform incorporates a real-time messaging system, allowing tutors and students to communicate effectively.
 
+Payment Integration: The platform supports secure payment transactions using Stripe. Users can make payments for tutoring services, 
+and for testing purposes, you can use the example testing card: 4000 0025 0000 1001.
+
 ## Technologies Used
 Frontend: Next.js, Tailwind CSS
+
 Backend: Node.js
+
 Database: PostgreSQL
+
 ORM: Prisma
 
 ## Getting Started
