@@ -85,7 +85,7 @@ function profile() {
           } = await axios.post(SET_USER_IMAGE, formData, {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${cookies.jwt}`,
+              Authorization: `Bearer ${Cookies.jwt}`,
               "Content-Type": "multipart/form-data",
             },
           });

@@ -23,6 +23,7 @@ model User {
   createdAt DateTime @default(now())
   gigs Gigs[]
   orders Orders[]
+  reviews Reviews[]
 }
 
 model Gigs {
@@ -39,6 +40,7 @@ model Gigs {
   createdBy User @relation(fields: [userId], references: [id])
   userId Int
   orders Orders[]
+  reviews Reviews[]
 }
 
 model Orders {
@@ -51,4 +53,15 @@ model Orders {
   gig Gigs @relation(fields:[gigId],references: [id])
   gigId Int
   price Int
+}
+
+model Reviews {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  rating Int
+  reviewText String?
+  gig Gigs @relation(fields:[gigId],references: [id])
+  gigId Int
+  reviewer User @relation(fields: [reviewerId],references: [id])
+  reviewerId Int
 }

@@ -111,7 +111,7 @@ function EditGig() {
   };
   return (
     <div className="min-h-[80vh] my-10 mt-0 px-32">
-      <h1 className="text-6xl text-gray-900 mt-6">Edita un servicio</h1>
+      <h1 className="text-6xl text-gray-900 mt-6">Editar un servicio</h1>
       <h3 className="text-3xl text-gray-900 mt-6">
         Ingresa los detalles para editar el servicio
       </h3>
@@ -271,7 +271,7 @@ function EditGig() {
             type="button"
             onClick={editGig}
           >
-            Crear
+            Guardar
           </button>
         </div>
       </form>

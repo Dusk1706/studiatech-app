@@ -8,5 +8,4 @@ export const reducerCases = {
   SET_GIG_DATA: "SET_GIG_DATA",
   HAS_USER_ORDERED_GIG: "HAS_USER_ORDERED_GIG",
   ADD_REVIEW: "ADD_REVIEW",
-  SET_GIG_DATA: "SET_GIG_DATA",
 };

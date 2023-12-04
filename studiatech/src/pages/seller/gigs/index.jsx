@@ -63,7 +63,7 @@ function Index() {
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       href={`/seller/gigs/${id}`}
                     >
-                      Edit
+                      Editar
                     </Link>
                   </td>
                 </tr>

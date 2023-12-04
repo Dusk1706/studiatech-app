@@ -6,16 +6,16 @@ import React, { useEffect, useState } from "react";
 function Search() {
   const router = useRouter();
   const { category, q } = router.query;
-  const [gigs, setGigs] = useState(undefined);
+  const [gigs, setGigs] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       try {
-        const {
-          data: { gigs },
-        } = await axios.get(
+        const { data } = await axios.get(
           `${SEARCH_GIGS_ROUTE}?searchTerm=${q}&category=${category}`
         );
-        setGigs(gigs);
+        console.log({ gigs });
+        setGigs(data.gigs);
       } catch (err) {
         console.error(err);
       }

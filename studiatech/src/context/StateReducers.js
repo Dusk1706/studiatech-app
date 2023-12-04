@@ -8,7 +8,7 @@ export const initialState = {
   gigData: undefined,
   hasOrdered: false,
   reloadReviews: false,
-  gigData: undefined
+  gigData: undefined,
 };
 
 const reducer = (state, action) => {
@@ -44,7 +44,6 @@ const reducer = (state, action) => {
         ...state,
         gigData: action.gigData,
       };
-
     case reducerCases.HAS_USER_ORDERED_GIG:
       return {
         ...state,
@@ -58,12 +57,6 @@ const reducer = (state, action) => {
           reviews: [...state.gigData.reviews, action.newReview],
         },
       };
-      case reducerCases.SET_GIG_DATA:
-        return{
-          ...state,
-          gigData: action.gigData,
-
-        }
     default:
       return state;
   }

@@ -9,6 +9,7 @@ import axios from "axios";
 import { GET_USER_INFO, HOST } from "../utils/constants";
 import { reducerCases } from "../context/constants";
 import Image from "next/image";
+import ContextMenu from "./ContextMenu";
 
 function Navbar() {
   const router = useRouter();
@@ -111,6 +112,7 @@ function Navbar() {
             userInfo: projectedUserInfo,
           });
           setIsLoaded(true);
+          console.log({ user });
           if (user.isProfileSet === false) {
             router.push("/profile");
           }
@@ -124,6 +126,41 @@ function Navbar() {
       setIsLoaded(true);
     }
   }, [cookies, userInfo, dispatch]);
+
+  const [isContextMenuVisible, setIsContextMenuVisible] = useState(false);
+  useEffect(() => {
+    const clickListener = (e) => {
+      e.stopPropagation();
+
+      if (isContextMenuVisible) setIsContextMenuVisible(false);
+    };
+    if (isContextMenuVisible) {
+      window.addEventListener("click", clickListener);
+    }
+    return () => {
+      window.removeEventListener("click", clickListener);
+    };
+  }, [isContextMenuVisible]);
+  const ContextMenuData = [
+    {
+      name: "Profile",
+      callback: (e) => {
+        e.stopPropagation();
+
+        setIsContextMenuVisible(false);
+        router.push("/profile");
+      },
+    },
+    {
+      name: "Logout",
+      callback: (e) => {
+        e.stopPropagation();
+
+        setIsContextMenuVisible(false);
+        router.push("/logout");
+      },
+    },
+  ];
 
   return (
     <>
@@ -254,6 +291,7 @@ function Navbar() {
               </li>
             </ul>
           )}
+          {isContextMenuVisible && <ContextMenu data={ContextMenuData} />}
         </nav>
       )}
     </>
