@@ -14,7 +14,6 @@ export const addMessage = async (req, res, next) => {
         data: {
           sender: {
             connect: {
-              // @ts-expect-error
               id: parseInt(req.userId),
             },
           },
@@ -35,10 +34,10 @@ export const addMessage = async (req, res, next) => {
     }
     return res
       .status(400)
-      .send("userId, recipentId, orderId and message is required.");
+      .send("Id de Usuario, Destinatario, Orden y Mensaje es requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -78,10 +77,10 @@ export const getMessages = async (req, res, next) => {
       }
       return res.status(200).json({ messages, recipentId });
     }
-    return res.status(400).send("Order id is required.");
+    return res.status(400).send("Id de orden requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -100,10 +99,10 @@ export const getUnreadMessages = async (req, res, next) => {
       });
       return res.status(200).json({ messages });
     }
-    return res.status(400).send("User id is required.");
+    return res.status(400).send("Id de Usuario requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -115,11 +114,11 @@ export const markAsRead = async (req, res, next) => {
         where: { id: parseInt(req.params.messageId) },
         data: { isRead: true },
       });
-      return res.status(200).send("Message mark as read.");
+      return res.status(200).send("Mensaje marcado como leido.");
     }
-    return res.status(400).send("User id and message Id is required.");
+    return res.status(400).send("Id de Usuario y Mensaje requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };

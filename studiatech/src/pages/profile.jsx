@@ -23,6 +23,7 @@ function profile() {
   const [data, setData] = useState({
     userName: "",
     fullName: "",
+    phone: "",
     description: "",
   });
 
@@ -32,6 +33,7 @@ function profile() {
       if (userInfo?.username) handleData.userName = userInfo?.username;
       if (userInfo?.description) handleData.description = userInfo?.description;
       if (userInfo?.fullName) handleData.fullName = userInfo?.fullName;
+      if (userInfo?.phone) handleData.phone = userInfo?.phone;
     }
 
     if (userInfo?.imageName) {
@@ -205,6 +207,22 @@ function profile() {
                   name="fullName"
                   placeholder="Ingresa tu nombre completo"
                   value={data.fullName}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label
+                  className={`${labelClassName} style-text-black`}
+                  htmlFor="phone"
+                >
+                  Celular
+                </label>
+                <input
+                  type="text"
+                  className={inputClassName}
+                  name="phone"
+                  placeholder="Ingresa tu celular"
+                  value={data.phone}
                   onChange={handleChange}
                 />
               </div>

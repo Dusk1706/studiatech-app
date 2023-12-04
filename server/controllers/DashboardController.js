@@ -98,9 +98,9 @@ export const getSellerData = async (req, res, next) => {
         },
       });
     }
-    return res.status(400).send("User id is required.");
+    return res.status(400).send("Id del usuario requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };

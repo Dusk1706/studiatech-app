@@ -10,7 +10,6 @@ const generatePassword = async (password) => {
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (email, userId) => {
-  // @ts-ignore
   return jwt.sign({ email, userId }, process.env.JWT_KEY, {
     expiresIn: maxAge,
   });
@@ -32,16 +31,16 @@ export const signup = async (req, res, next) => {
         jwt: createToken(email, user.id),
       });
     } else {
-      return res.status(400).send("Email and Password Required");
+      return res.status(400).send("Correo y contraseña requeridos");
     }
   } catch (err) {
     console.log(err);
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === "P2002") {
-        return res.status(400).send("Email Already Registered");
+        return res.status(400).send("Correo ya registrado");
       }
     } else {
-      return res.status(500).send("Internal Server Error");
+      return res.status(500).send("Error en Server.");
     }
     throw err;
   }
@@ -58,12 +57,12 @@ export const login = async (req, res, next) => {
         },
       });
       if (!user) {
-        return res.status(404).send("User not found");
+        return res.status(404).send("Usuario no encontrado");
       }
 
       const auth = await compare(password, user.password);
       if (!auth) {
-        return res.status(400).send("Invalid Password");
+        return res.status(400).send("Contraseña Invalida");
       }
 
       return res.status(200).json({
@@ -71,10 +70,10 @@ export const login = async (req, res, next) => {
         jwt: createToken(email, user.id),
       });
     } else {
-      return res.status(400).send("Email and Password Required");
+      return res.status(400).send("Correo y contraseña requerida");
     }
   } catch (err) {
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -94,20 +93,21 @@ export const getUserInfo = async (req, res, next) => {
           image: user?.profileImage,
           username: user?.username,
           fullName: user?.fullName,
+          phone: user?.phone,
           description: user?.description,
           isProfileSet: user?.isProfileInfoSet,
         },
       });
     }
   } catch (err) {
-    res.status(500).send("Internal Server Occured");
+    res.status(500).send("Error en Server.");
   }
 };
 
 export const setUserInfo = async (req, res, next) => {
   try {
     if (req?.userId) {
-      const { userName, fullName, description } = req.body;
+      const { userName, fullName, phone, description } = req.body;
       if (userName && fullName && description) {
         const prisma = new PrismaClient();
         const userNameValid = await prisma.user.findUnique({
@@ -121,6 +121,7 @@ export const setUserInfo = async (req, res, next) => {
           data: {
             username: userName,
             fullName,
+            phone,
             description,
             isProfileInfoSet: true,
           },
@@ -138,7 +139,7 @@ export const setUserInfo = async (req, res, next) => {
         return res.status(400).json({ userNameError: true });
       }
     } else {
-      return res.status(500).send("Internal Server Error");
+      return res.status(500).send("Error en Server.");
     }
     throw err;
   }
@@ -159,11 +160,11 @@ export const setUserImage = async (req, res, next) => {
         });
         return res.status(200).json({ img: fileName });
       }
-      return res.status(400).send("Cookie Error.");
+      return res.status(400).send("Error de Cookies.");
     }
-    return res.status(400).send("Image not inclued.");
+    return res.status(400).send("Imagen no incluida.");
   } catch (err) {
     console.log(err);
-    res.status(500).send("Internal Server Occured");
+    res.status(500).send("Error en Server.");
   }
 };

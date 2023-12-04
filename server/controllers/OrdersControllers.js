@@ -34,10 +34,10 @@ export const addOrder = async (req, res, next) => {
         .status(201)
         .json({ clientSecret: paymentIntent.client_secret });
     }
-    return res.status(400).send("GigId should be required.");
+    return res.status(400).send("Id de Servicio requerido.");
   } catch (err) {
     console.error(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -52,7 +52,7 @@ export const confirmOrder = async (req, res, next) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -66,10 +66,10 @@ export const getBuyerOrders = async (req, res, next) => {
       });
       return res.status(200).json({ orders });
     }
-    return res.status(400).send("User id is required.");
+    return res.status(400).send("Id de Usuario requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -93,9 +93,9 @@ export const getSellerOrders = async (req, res, next) => {
       });
       return res.status(200).json({ orders });
     }
-    return res.status(400).send("User id is required.");
+    return res.status(400).send("Id de Usuario requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };

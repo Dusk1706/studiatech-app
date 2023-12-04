@@ -41,13 +41,13 @@ export const addGig = async (req, res, next) => {
           },
         });
 
-        return res.status(201).send("Successfully created the gig.");
+        return res.status(201).send("Servicio creado exitosamente.");
       }
     }
-    return res.status(400).send("All properties should be required.");
+    return res.status(400).send("Todos los atributos son requeridos.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -62,7 +62,7 @@ export const getUserAuthGigs = async (req, res, next) => {
     return res.status(200).json({ gigs: user?.gigs});
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -108,10 +108,10 @@ export const getGigData = async (req, res, next) => {
         .status(200)
         .json({ gig: { ...gig, totalReviews, averageRating } });
     }
-    return res.status(400).send("GigId should be required.");
+    return res.status(400).send("Id del servicio es requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -160,13 +160,13 @@ export const editGig = async (req, res, next) => {
           if (existsSync(`uploads/${image}`)) unlinkSync(`uploads/${image}`);
         });
 
-        return res.status(201).send("Successfully Eited the gig.");
+        return res.status(201).send("Servicio editado exitosamente.");
       }
     }
-    return res.status(400).send("All properties should be required.");
+    return res.status(400).send("Todos los atributos son requeridos.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -179,10 +179,10 @@ export const searchGigs = async (req, res, next) => {
       );
       return res.status(200).json({ gigs });
     }
-    return res.status(400).send("Search Term or Category is required.");
+    return res.status(400).send("Campo a buscar requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -237,10 +237,10 @@ export const checkGigOrder = async (req, res, next) => {
         .status(200)
         .json({ hasUserOrderedGig: hasUserOrderedGig ? true : false });
     }
-    return res.status(400).send("userId and gigId is required.");
+    return res.status(400).send("Id del Usuario y Servicio es requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
 
@@ -263,15 +263,15 @@ export const addReview = async (req, res, next) => {
           });
           return res.status(201).json({ newReview });
         }
-        return res.status(400).send("ReviewText and Rating are required.");
+        return res.status(400).send("Opinion y puntuacion es requerido.");
       }
       return res
         .status(400)
-        .send("You need to purchase the gig in order to add review.");
+        .send("Necesitas comprar el servicio para dejar una opinion.");
     }
-    return res.status(400).send("userId and gigId is required.");
+    return res.status(400).send("Id de Usuario y Servicio requerido.");
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("Error en Server.");
   }
 };
