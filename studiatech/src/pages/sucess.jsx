@@ -12,16 +12,25 @@ function Success() {
   useEffect(() => {
     const changeOrderStatus = async () => {
       try {
-
+        await axios.put(
+          ORDER_SUCCESS_ROUTE,
+          { paymentIntent: payment_intent },
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${cookies.jwt}`,
+            },
+          }
+        );
       } catch (err) {
         console.error(err);
       }
     };
     if (payment_intent) {
       changeOrderStatus();
-      // setTimeout(() => router.push("/buyer/orders"), 5000);
+      setTimeout(() => router.push("/buyer/orders"), 5000);
     } else {
-      // router.push("/");
+      router.push("/");
     }
   }, [payment_intent, router]);
   return (
