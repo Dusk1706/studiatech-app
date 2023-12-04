@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import Stripe from "stripe";
 
 const stripe = new Stripe(
-  "sk_test_51OJOeyHxpVl4H39QW6d4EzwgfRUDe5oKxBI0JANGs8P2hXaEz80tHj6gqVVE2ZVMvFm9YJzqiloqzCUzvcFvenWv00ieeeXSoo"
+  "sk_test_51DpVXWGc9EcLzRLBNKni929hB026lACv6toMfjH1FPtIXfYgIrhXzjolcYzDDl2VwtvmyPF20PJ1JaMUCTNoEwDN00FN8hrRZL"
 );
 
 export const addOrder = async (req, res, next) => {
@@ -15,8 +15,8 @@ export const addOrder = async (req, res, next) => {
       });
 
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: gig?.price * 100,
-        currency: "usd",
+        amount: gig?.price * 1000,
+        currency: "mxn",
         automatic_payment_methods: {
           enabled: true,
         },
@@ -25,7 +25,7 @@ export const addOrder = async (req, res, next) => {
       await prisma.orders.create({
         data: {
           paymentIntent: paymentIntent.id,
-          price: gig.price,
+          price: gig?.price,
           buyer: { connect: { id: req.userId } },
           gig: { connect: { id: parseInt(gigId) } },
         },
