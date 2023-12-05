@@ -3,30 +3,23 @@ import React from "react";
 import {
   FiGithub,
   FiInstagram,
-  FiYoutube,
   FiLinkedin,
-  FiTwitter,
 } from "react-icons/fi";
 import StudiaTechLogo from "./StudiaTechLogo";
 import { categories } from "../utils/categories";
 
 function Footer() {
   const socialLinks = [
-    { name: "Github", icon: <FiGithub />, link: "https://www.github.com" },
+    { name: "Github", icon: <FiGithub />, link: "github.com/Dusk1706/studiatech-app" },
     {
       name: "LinkedIn",
       icon: <FiLinkedin />,
-      link: "https://www.linkedin.com/in/koolkishan/",
+      link: "linkedin.com/in/dusk/",
     },
     {
       name: "Instagram",
       icon: <FiInstagram />,
-      link: "https://instagram.com/koolkishansheth",
-    },
-    {
-      name: "Twitter",
-      icon: <FiTwitter />,
-      link: "https://twitter.com/koolkishansheth",
+      link: "https://instagram.com/studiatech",
     },
   ];
   const data = [
