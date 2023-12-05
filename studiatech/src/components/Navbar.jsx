@@ -234,13 +234,22 @@ function Navbar() {
           ) : (
             <ul className="flex gap-10 items-center">
               {isSeller && (
-                <li
-                  className="cursor-pointer text-[#1DBF73] font-medium"
-                  onClick={() => router.push("/seller/gigs/create")}
-                >
-                  Crear Servicio
-                </li>
+                <>
+                  <li
+                    className="cursor-pointer text-[#1DBF73] font-medium"
+                    onClick={() => router.push("/seller/gigs/create")}
+                  >
+                    Crear Servicio
+                  </li>
+                  <li
+                    className="cursor-pointer text-[#1DBF73] font-medium"
+                    onClick={() => router.push("/seller/gigs/")}
+                  >
+                    Servicios
+                  </li>
+                </>
               )}
+
               <li
                 className="cursor-pointer text-[#1DBF73] font-medium"
                 onClick={handleOrdersNavigate}
