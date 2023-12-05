@@ -30,16 +30,16 @@ export default function CheckoutForm() {
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
         case "succeeded":
-          setMessage("Payment succeeded!");
+          setMessage("Pago exitoso!");
           break;
         case "processing":
-          setMessage("Your payment is processing.");
+          setMessage("Tu pago esta siendo procesado.");
           break;
         case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
+          setMessage("Tu pago no se concreto, intenta de nuevo.");
           break;
         default:
-          setMessage("Something went wrong.");
+          setMessage("Algo salio mal.");
           break;
       }
     });
@@ -73,7 +73,7 @@ export default function CheckoutForm() {
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
     } else {
-      setMessage("An unexpected error occurred.");
+      setMessage("Un error inesperado ocurrio.");
     }
 
     setIsLoading(false);

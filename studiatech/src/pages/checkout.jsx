@@ -8,7 +8,9 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe("pk_test_xeqIPdYS2PpKbHmKG4gJqpde");
+const stripePromise = loadStripe("pk_test_xeqIPdYS2PpKbHmKG4gJqpde", {
+  locale: 'es-419',
+});
 
 function Checkout() {
   const [clientSecret, setClientSecret] = useState("");
@@ -51,7 +53,7 @@ function Checkout() {
   return (
     <div className="min-h-[80vh] max-w-full mx-20 flex flex-col gap-10 items-center">
       <h1 className="text-3xl">
-        Porfavor completa el pago para proeder la orden.
+        Porfavor completa el pago para proceder la orden.
       </h1>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>

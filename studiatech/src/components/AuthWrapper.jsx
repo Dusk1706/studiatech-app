@@ -6,6 +6,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { MdFacebook } from "react-icons/md";
+import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/router";
 
 function AuthWrapper({ type }) {
@@ -24,6 +25,10 @@ function AuthWrapper({ type }) {
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const closeModal = async () => {
+    dispatch({ type: reducerCases.CLOSE_AUTH_MODAL });
   };
 
   const handleClick = async () => {
@@ -62,6 +67,11 @@ function AuthWrapper({ type }) {
           id="auth-modal"
         >
           <div className="flex flex-col justify-center items-center p-8 gap-7">
+            <button
+              onClick={closeModal}
+            >
+              <IoClose className="absolute right-10" />
+            </button>
             <h3 className="text-4xl font-semibold text-slate-700">
               {type === "login" ? "Iniciar sesion" : "Registrarse"}
             </h3>
@@ -77,7 +87,7 @@ function AuthWrapper({ type }) {
             </div>
             <div className="relative  w-full text-center">
               <span className="before:content-[''] before:h-[0.5px] before:w-80 before:absolute before:top-[50%] before:left-0 before:bg-slate-400">
-                <span className="bg-white relative z-10 px-2">OR</span>
+                <span className="bg-white relative z-10 px-2">O</span>
               </span>
             </div>
             <div className="flex flex-col gap-5">
@@ -109,7 +119,7 @@ function AuthWrapper({ type }) {
           <div className="py-5 w-full flex items-center justify-center border-t border-slate-400">
             <span className="text-sm  text-slate-700">
               {type === "login" ? (
-                 <>
+                <>
                   ¿No tienes cuenta?{" "}
                   <span
                     className="text-[#1DBF73] cursor-pointer"
@@ -126,7 +136,7 @@ function AuthWrapper({ type }) {
                   >
                     Registrarse
                   </span>
-                 </>
+                </>
               ) : (
                 <>
                   ¿Ya tienes cuenta?{" "}
@@ -146,7 +156,7 @@ function AuthWrapper({ type }) {
                     Iniciar sesion
                   </span>
                 </>
-            )}
+              )}
             </span>
           </div>
         </div>

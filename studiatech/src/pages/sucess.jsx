@@ -36,9 +36,9 @@ function Success() {
   return (
     <div className="h-[80vh] flex items-center px-20 pt-20 flex-col">
       <h1 className="text-4xl text-center">
-        Payment successful. You are being redirected to the orders page.
+        Pago exitoso. Estas siendo direccionado a la pagina de ordenes.
       </h1>
-      <h1 className="text-4xl text-center">Please do not close the page.</h1>
+      <h1 className="text-4xl text-center">Por favor no cierres la pagina.</h1>
     </div>
   );
 }
